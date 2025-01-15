@@ -1,0 +1,379 @@
+Table cache {
+  key varchar(255) [pk]
+  value mediumtext
+  expiration int(11)
+}
+
+Table cache_locks {
+  key varchar(255) [pk]
+  owner varchar(255)
+  expiration int(11)
+}
+
+Table commitment_states {
+  id bigint [pk]
+  name varchar(255)
+  created_at timestamp [default: null]
+  updated_at timestamp [default: null]
+}
+
+Table commitments {
+  id bigint [pk]
+  promoter_id bigint
+  event_id bigint
+  role varchar(255)
+  start_time datetime
+  end_time datetime
+  status bigint [default: null]
+  created_at timestamp [default: null]
+  updated_at timestamp [default: null]
+}
+
+Table contact_persons {
+  id bigint [pk]
+  name varchar(255)
+  email varchar(255) [unique]
+  phone varchar(255)
+  location_id bigint
+  role varchar(255)
+  created_at timestamp [default: null]
+  updated_at timestamp [default: null]
+}
+
+Table countries {
+  id bigint [pk]
+  name text [default: null]
+  created_at timestamp [default: null]
+  updated_at timestamp [default: null]
+}
+
+Table customers {
+  id bigint [pk]
+  name text
+  company_name varchar(255)
+  email varchar(255) [unique]
+  phone varchar(255)
+  address_line_1 varchar(255) [default: null]
+  address_line_2 varchar(255) [default: null]
+  post_code text [default: null]
+  city text [default: null]
+  country bigint [default: null]
+  vat_number varchar(255)
+  created_at timestamp [default: null]
+  updated_at timestamp [default: null]
+}
+
+Table departments {
+  id bigint [pk]
+  name varchar(255)
+  created_at timestamp [default: null]
+  updated_at timestamp [default: null]
+}
+
+Table employees {
+  id bigint [pk]
+  first_name varchar(255)
+  last_name varchar(255)
+  email varchar(255) [unique]
+  phone varchar(255) [default: null]
+  address_line_1 varchar(255) [default: null]
+  address_line_2 varchar(255) [default: null]
+  post_code varchar(255) [default: null]
+  city varchar(255) [default: null]
+  country bigint [default: null]
+  hire_date date [default: null]
+  birth_date date [default: null]
+  gender bigint [default: null]
+  position varchar(255) [default: null]
+  department_id bigint [default: null]
+  salary decimal(10,2) [default: 0]
+  created_at timestamp [default: null]
+  updated_at timestamp [default: null]
+}
+
+Table event_states {
+  id bigint [pk]
+  name varchar(255) [default: null]
+  created_at timestamp [default: null]
+  updated_at timestamp [default: null]
+}
+
+Table events {
+  id bigint [pk]
+  name varchar(255)
+  date datetime
+  location_id bigint
+  organizer varchar(255)
+  budget double
+  status bigint
+  created_at timestamp [default: null]
+  updated_at timestamp [default: null]
+}
+
+Table failed_jobs {
+  id bigint [pk]
+  uuid varchar(255) [unique]
+  connection text
+  queue text
+  payload longtext
+  exception longtext
+  failed_at timestamp [default: null]
+}
+
+Table genders {
+  id bigint [pk]
+  name text
+  created_at timestamp [default: null]
+  updated_at timestamp [default: null]
+}
+
+Table group_permissions {
+  id bigint [pk]
+  groupid bigint
+  value varchar(255) [default: null]
+  created_at timestamp [default: null]
+  updated_at timestamp [default: null]
+}
+
+Table group_users {
+  id bigint [pk]
+  groupid bigint
+  userid bigint
+  created_at timestamp [default: null]
+  updated_at timestamp [default: null]
+}
+
+Table groups {
+  id bigint [pk]
+  name varchar(255)
+  description varchar(255)
+  created_at timestamp [default: null]
+  updated_at timestamp [default: null]
+}
+
+Table inventories {
+  id bigint [pk]
+  name varchar(255)
+  type varchar(255)
+  quantity int [default: 0]
+  available boolean
+  condition bigint
+  price varchar(255)
+  rental_price varchar(255)
+  created_at timestamp [default: null]
+  updated_at timestamp [default: null]
+}
+
+Table inventory_conditions {
+  id bigint [pk]
+  name varchar(255)
+  created_at timestamp [default: null]
+  updated_at timestamp [default: null]
+}
+
+Table invoices {
+  id bigint [pk]
+  offer_id bigint
+  customer_id bigint
+  issue_date date
+  due_date date
+  total_amount double
+  payment_status bigint
+  created_at timestamp [default: null]
+  updated_at timestamp [default: null]
+}
+
+Table job_batches {
+  id varchar(255) [pk]
+  name varchar(255)
+  total_jobs int
+  pending_jobs int
+  failed_jobs int
+  failed_job_ids longtext
+  options mediumtext [default: null]
+  cancelled_at int [default: null]
+  created_at int
+  finished_at int [default: null]
+}
+
+Table jobs {
+  id bigint [pk]
+  queue varchar(255)
+  payload longtext
+  attempts tinyint [default: 0]
+  reserved_at int [default: null]
+  available_at int
+  created_at int
+}
+
+Table locations {
+  id bigint [pk]
+  name varchar(50)
+  address varchar(100)
+  city varchar(60)
+  country bigint
+  postal_code varchar(10)
+  capacity int [default: 0]
+  created_at timestamp [default: null]
+  updated_at timestamp [default: null]
+}
+
+Table migrations {
+  id int [pk]
+  migration varchar(255)
+  batch int
+}
+
+Table occupations {
+  id bigint [pk]
+  name varchar(255)
+  description varchar(255)
+  required_skills varchar(255)
+  hourly_rate varchar(255)
+  event varchar(255) [default: null]
+  created_at timestamp [default: null]
+  updated_at timestamp [default: null]
+}
+
+Table offer_states {
+  id bigint [pk]
+  name text
+  created_at timestamp [default: null]
+  updated_at timestamp [default: null]
+}
+
+Table offers {
+  id bigint [pk]
+  event_id bigint
+  customer_id bigint
+  description text
+  total_price varchar(255)
+  status bigint [default: null]
+  created_at timestamp [default: null]
+  updated_at timestamp [default: null]
+}
+
+Table password_reset_tokens {
+  email varchar(255) [pk]
+  token varchar(255)
+  created_at timestamp [default: null]
+}
+
+Table payment_states {
+  id bigint [pk]
+  name varchar(255)
+  created_at timestamp [default: null]
+  updated_at timestamp [default: null]
+}
+
+Table permissions {
+  id bigint [pk]
+  name varchar(255)
+  description varchar(255)
+  created_at timestamp [default: null]
+  updated_at timestamp [default: null]
+}
+
+Table price_groups {
+  id bigint [pk]
+  name varchar(255)
+  description varchar(255)
+  discount varchar(255)
+  currency varchar(255)
+  created_at timestamp [default: null]
+  updated_at timestamp [default: null]
+}
+
+Table promoter_groups {
+  id bigint [pk]
+  name varchar(255)
+  skills varchar(255)
+  description varchar(255)
+  max_members int
+  created_at timestamp [default: null]
+  updated_at timestamp [default: null]
+}
+
+Table promoters {
+  id bigint [pk]
+  employee_id bigint
+  promoter_group_id bigint
+  name varchar(255)
+  email varchar(255) [unique]
+  phone varchar(255)
+  skills varchar(255)
+  certifications varchar(255)
+  availability varchar(255)
+  created_at timestamp [default: null]
+  updated_at timestamp [default: null]
+}
+
+Table service_areas {
+  id bigint [pk]
+  name varchar(255)
+  description varchar(255) [default: null]
+  parent_area_id bigint [default: null]
+  created_at timestamp [default: null]
+  updated_at timestamp [default: null]
+}
+
+Table sessions {
+  id varchar(255) [pk]
+  user_id bigint [default: null]
+  ip_address varchar(45) [default: null]
+  user_agent text [default: null]
+  payload longtext
+  last_activity int
+}
+
+Table skills {
+  id bigint [pk]
+  name varchar(255) [default: null]
+  description varchar(255) [default: null]
+  category varchar(255) [default: null]
+  required_certification varchar(255) [default: null]
+  created_at timestamp [default: null]
+  updated_at timestamp [default: null]
+}
+
+Table users {
+  id bigint [pk]
+  name varchar(255)
+  email varchar(255) [unique]
+  password varchar(255) [default: null]
+  password_salt varchar(255) [default: null]
+  last_login datetime [default: null]
+  account_typ varchar(255) [default: "user"]
+  activated boolean [default: false]
+  blocked boolean [default: false]
+  email_verified_at timestamp [default: null]
+  remember_token varchar(100) [default: null]
+  created_at timestamp [default: null]
+  updated_at timestamp [default: null]
+}
+
+Ref: events.status > event_states.id
+Ref: inventories.condition > inventory_conditions.id
+Ref: invoices.payment_status > payment_states.id
+Ref: group_permissions.groupid > groups.id
+Ref: group_permissions.id > permissions.id
+Ref: group_users.groupid > groups.id
+Ref: group_users.userid > users.id
+Ref: commitments.status > commitment_states.id
+Ref: offers.status > offer_states.id
+Ref: promoters.promoter_group_id > promoter_groups.id
+Ref: employees.gender > genders.id
+Ref: employees.country > countries.id
+Ref: locations.country > countries.id
+Ref: customers.country > countries.id
+Ref: employees.department_id > departments.id
+Ref: promoters.employee_id > employees.id
+Ref: events.location_id > locations.id
+Ref: offers.event_id > events.id
+Ref: offers.customer_id > customers.id
+Ref: invoices.offer_id > offers.id
+Ref: invoices.customer_id > customers.id
+Ref: commitments.promoter_id > promoters.id
+Ref: commitments.event_id > events.id
+Ref: contact_persons.location_id > locations.id
+Ref: service_areas.parent_area_id > service_areas.id

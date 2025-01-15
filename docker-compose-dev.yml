@@ -1,0 +1,51 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: laravel_app
+    volumes:
+      - .:/var/www/html
+    ports:
+      - "8000:80"
+    networks:
+      - laravel_network
+    depends_on:
+      - db
+      - mailhog
+
+  db:
+    image: mariadb:latest
+    container_name: laravel_db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: r00t
+      MYSQL_DATABASE: api_data
+      MYSQL_USER: api
+      MYSQL_PASSWORD: ap1
+    ports:
+      - "13306:3306"
+    networks:
+      - laravel_network
+    volumes:
+      - db_data:/var/lib/mysql
+
+  mailhog:
+    image: druidfi/mailhog:latest
+    restart: always
+    container_name: mailhog
+    expose:
+      - 1025
+      - 8025
+    ports:
+      - "1025:1025"   # SMTP Port
+      - "8025:8025"   # Web UI Port
+    networks:
+      - laravel_network
+
+networks:
+  laravel_network:
+    driver: bridge
+
+volumes:
+  db_data:

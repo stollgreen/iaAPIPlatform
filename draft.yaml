@@ -1,0 +1,248 @@
+controllers:
+  TimeTrackingState:
+    resource: api
+    methods: [ index, store, show, update, destroy ]
+  TimeTrackingChannel:
+    resource: api
+    methods: [index, store, show, update, destroy]
+  TimeTracking:
+    resource: api
+    methods: [index, store, show, update, destroy]
+  CountryController:
+    resource: api
+    methods: [index, store, show, update, destroy]
+  Gender:
+    resource: api
+    methods: [index, store, show, update, destroy]
+  OfferState:
+    resource: api
+    methods: [index, store, show, update, destroy]
+  PaymentState:
+    resource: api
+    methods: [index, store, show, update, destroy]
+  CommitmentState:
+    resource: api
+    methods: [index, store, show, update, destroy]
+  Department:
+    resource: api
+    methods: [index, store, show, update, destroy]
+  InventoryCondition:
+    resource: api
+    methods: [index, store, show, update, destroy]
+  EventState:
+    resource: api
+    methods: [index, store, show, update, destroy]
+  Promoter:
+    resource: api
+    methods: [index, store, show, update, destroy]
+  Employee:
+    resource: api
+    methods: [index, store, show, update, destroy]
+  Customer:
+    resource: api
+    methods: [index, store, show, update, destroy]
+  Event:
+    resource: api
+    methods: [index, store, show, update, destroy]
+  Offer:
+    resource: api
+    methods: [index, store, show, update, destroy]
+  Invoice:
+    resource: api
+    methods: [index, store, show, update, destroy]
+  Occupation:
+    resource: api
+    methods: [index, store, show, update, destroy]
+  Commitment:
+    resource: api
+    methods: [index, store, show, update, destroy]
+  Location:
+    resource: api
+    methods: [index, store, show, update, destroy]
+  ContactPerson:
+    resource: api
+    methods: [index, store, show, update, destroy]
+  Skill:
+    resource: api
+    methods: [index, store, show, update, destroy]
+  Inventory:
+    resource: api
+    methods: [index, store, show, update, destroy]
+  PriceGroup:
+    resource: api
+    methods: [index, store, show, update, destroy]
+  ServiceArea:
+    resource: api
+    methods: [index, store, show, update, destroy]
+  Permission:
+    resource: api
+    methods: [index, store, show, update, destroy]
+  Group:
+    resource: api
+    methods: [index, store, show, update, destroy]
+  PromoterGroup:
+    resource: api
+    methods: [index, store, show, update, destroy]
+  User:
+    resource: api
+    methods: [index, store, show, update, destroy]
+  GroupPermission:
+    resource: api
+    methods: [index, store, show, update, destroy]
+  GroupUser:
+    resource: api
+    methods: [index, store, show, update, destroy]
+
+models:
+  Skill:
+    name: varchar(255)
+    description: varchar(255)
+    category: varchar(255)
+    required_certification: varchar(255)
+  Gender:
+    name: text
+  OfferState:
+    name: text
+  PaymentState:
+    name: varchar(255)
+  CommitmentState:
+    name: varchar(255)
+  Department:
+    name: varchar(75)
+  InventoryCondition:
+    name: varchar(255)
+  EventState:
+    name: varchar(255)
+  Group:
+    name: varchar(255)
+    description: varchar(255)
+  GroupPermission:
+    groupid: int default 0 foreign:Group
+    value: nullable bool default(null)
+  GroupUser:
+    groupid: int default 0 foreign:Group
+    userid: int default 0 foreign:User
+  Permission:
+    name: varchar(255)
+    description: varchar(255)
+  Location:
+    name: varchar(255)
+    address: varchar(255)
+    city: varchar(255)
+    country: int default 0 foreign:Country
+    postal_code: varchar(255)
+    capacity: varchar(255)
+  PromoterGroup:
+    name: varchar(255)
+    skills: varchar(255)
+    description: varchar(255)
+    max_members: varchar(255)
+  Promoter:
+    employee_id: varchar(255) foreign:Employee
+    promoter_group_id: int default 0 foreign:PromoterGroup
+    name: varchar(100)
+    email: varchar(100) unique
+    phone: varchar(200)
+    skills: varchar(255)
+    certifications: varchar(255)
+    availability: varchar(255)
+  Employee:
+    first_name: varchar(255)
+    last_name: varchar(255)
+    email: varchar(255) unique
+    phone: nullable varchar default(null)
+    address_line_1: nullable varchar default(null)
+    address_line_2: nullable varchar default(null)
+    post_code: nullable varchar default(null)
+    city: nullable varchar default(null)
+    country: nullable int default(null) foreign:Country
+    hire_date: nullable date default(null)
+    birth_date: nullable date default(null)
+    gender: nullable int default(null) foreign:Gender
+    position: nullable varchar default(null)
+    department_id: nullable int default(null) foreign:Department
+    salary: decimal(10,2)
+  Customer:
+    name: text
+    company_name: varchar(255)
+    email: varchar(255) unique
+    phone: varchar(255)
+    address_line_1: nullable varchar default(null)
+    address_line_2: nullable varchar default(null)
+    post_code: nullable text default(null)
+    city: nullable text default(null)
+    country: nullable int default(null) foreign:Country
+    vat_number: varchar(255)
+  Event:
+    name: varchar(255)
+    date: datetime
+    location_id: varchar(255) foreign:Location
+    organizer: varchar(255)
+    budget: varchar(255)
+    status: varchar(255) foreign:Eventstatus
+  Offer:
+    event_id: varchar(255) foreign:Event
+    customer_id: varchar(255) foreign:Customer
+    description: text
+    total_price: decimal(10,2)
+    status: nullable varchar default(null) foreign:OfferState
+  Invoice:
+    offer_id: varchar(255) foreign:Offer
+    customer_id: varchar(255) foreign:Customer
+    issue_date: date
+    due_date: date
+    total_amount: decimal(10,2)
+    payment_status: varchar(255) foreign:PaymentState
+  Occupation:
+    name: varchar(255)
+    description: varchar(255)
+    required_skills: varchar(255)
+    hourly_rate: decimal(10,2)
+    event: nullable int default(null)
+  Commitment:
+    promoter_id: varchar(255) foreign:Promoter
+    event_id: varchar(255) foreign:Event
+    role: varchar(255)
+    start_time: datetime
+    end_time: datetime
+    status: nullable varchar default(null) foreign:CommitmentState
+  ContactPerson:
+    name: varchar(255)
+    email: varchar(255) unique
+    phone: varchar(255)
+    location_id: varchar(255) foreign:Location
+    role: varchar(255)
+  Inventory:
+    name: varchar(255)
+    type: varchar(255)
+    quantity: int default 0
+    available: boolean
+    condition: varchar() foreign:InventoryCondition
+    price: varchar(255)
+    rental_price: varchar(255)
+  PriceGroup:
+    name: varchar(255)
+    description: varchar(255)
+    discount: varchar(255)
+    currency: varchar(255)
+  ServiceArea:
+    name: varchar(255)
+    description: varchar(255)
+    parent_area_id: nullable int default(null) foreign:ServiceArea
+  User:
+    name: varchar(50)
+    email: varchar(30)
+  TimeTrackingChannel:
+    name: varchar(30)
+    description: nullable text,
+    active: bool default(0)
+  TimeTrackingState:
+    name: varchar(30)
+    description: nullable text
+  TimeTracking:
+    employee_id: int foreign:Employee
+    commitment_id: int foreign:Commitment
+    time_tracking_channel_id: int foreign:TimeTrackingChannel
+    time_tracking_state_id: int foreign:TimeTrackingState
+    start_time: datetime,
+    end_time: datetime,
